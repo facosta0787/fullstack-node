@@ -1,0 +1,17 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "Module db for login",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felipe Acosta",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "crypto-js": "^3.1.9-1",
+    "sequelize": "^4.22.9",
+    "sqlite3": "^3.1.13"
+  }
+}
