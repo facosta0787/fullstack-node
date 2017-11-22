@@ -6,7 +6,7 @@ const base64 = require('crypto-js/enc-base64')
 
 async function run(){
 
-  const { User, Post } = await db({ reset:false })
+  const { User, Post } = await db({ reset:true })
 
   // const user = await User.create({
   //   user:'facosta',

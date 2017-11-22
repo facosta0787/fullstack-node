@@ -7,7 +7,7 @@ module.exports = function dbInstance() {
   if(!dbinstance){
      dbinstance = new Sequelize('nodedb',null,null,{
        dialect:'sqlite',
-       storage:'./lib/nodedb.sqlite',
+       storage: `${__dirname}/nodelogin.sqlite`,
        query: {
          raw: true
        }

@@ -6,6 +6,7 @@ const UserModel = require('./models/user')
 const PostModel = require('./models/post')
 
 module.exports = async function(config){
+
   const db = dbInstance()
   const User = UserModel()
   const Post = PostModel()
@@ -15,7 +16,10 @@ module.exports = async function(config){
 
   await db.authenticate()
     .then(err => console.log(chalk.green('Connection has been successfully !')),
-          err => console.log(chalk.red('Error !'))
+          err => {
+            console.log(err.message)
+            console.log(err.stack)
+          }
     )
 
   if(config.reset){
