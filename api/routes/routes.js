@@ -2,12 +2,14 @@
 'use strict'
 const chalk = require('chalk')
 const log = console.log
+const loginController = require('../controllers/loginController')
 
 module.exports = async function(app){
+  const { getUsers } = await loginController()
 
   app.get('/authenticate', async ( req, res ) => {
-    log('Route run !')
-    res.send({ token: 'draga455whw478988hssgkp+%fsew#%/sdfgat' })
+    const users = await getUsers()
+    res.send(users)
   })
 
 }

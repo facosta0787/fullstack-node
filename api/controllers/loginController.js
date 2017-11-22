@@ -1,18 +1,17 @@
 'use strict'
 const db = require('db')
 
-async function  run(){
-  let { User, Post } = await db({reset:false})
+module.exports = async function run() {
 
-  User.create({
-    user:'facosta',
-    name:'Felipe Acosta',
-    password:'porque'
-  })
+  const { User } = await db({reset:false})
 
-  const users = await User.findAll()
+  async function getUsers(){
+    const users = await User.findAll()
+    return users
+  }
 
-  console.log(users)
+  return{
+    getUsers
+  }
+
 }
-
-run()
