@@ -5,7 +5,7 @@ const dbInstance = require('./lib/dbcon')
 const UserModel = require('./models/user')
 const PostModel = require('./models/post')
 
-module.exports = async function(config){
+exports.database = async function(config){
 
   const db = dbInstance()
   const User = UserModel()
@@ -26,8 +26,9 @@ module.exports = async function(config){
     await db.sync({ force:true }).then( ()=> console.log(chalk.green('Synced successfully!')))
   }
 
-  return {
-    User,
-    Post
-  }
+}
+
+exports.User = function(){
+  const User = UserModel()
+  return User
 }

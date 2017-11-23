@@ -2,8 +2,9 @@ import chalk from 'chalk'
 import express from 'express'
 import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
-import database from 'db'
+import { database } from 'db'
 import bcrypt from 'bcrypt'
+import _Auth from './controllers/AuthController'
 const PORT = process.env.PORT || 3000
 
 async function main(){
@@ -11,21 +12,19 @@ async function main(){
   app.use(bodyParser.urlencoded({ extended:false }))
   app.use(bodyParser.json())
 
-  const { User } = await database({ reset:false })
+  await database({ reset:false })
+  const Auth = new _Auth
 
   app.get('/', async (req, res ) => {
-    const users = await User.findAll()
-    res.send(users)
-  })
 
-  app.get('/user/create', async (req ,res) =>{
-    const hash = await bcrypt.hash('porque',10)
-    const user = await User.create({
-      user: 'jescobar',
-      name: 'Jose Escobar',
-      password: hash
+    const userCreated = await Auth.addUser({
+      user:'jrojas',
+      name:'Manuel Rojas',
+      password:'minuevohijo'
     })
-    res.send(user)
+
+    res.send(userCreated)
+
   })
 
   app.get('/user/compare', async (req, res) =>{
