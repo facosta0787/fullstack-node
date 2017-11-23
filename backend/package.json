@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A simple backend for login example",
+  "main": "index.js",
+  "scripts": {
+    "clean": "remove dist",
+    "dev": "set PORT=3000 && nodemon bin/dev",
+    "build": "npm run clean && mkdir dist && babel src -s -d dist",
+    "prod": "npm run build && node bin/prod"
+  },
+  "author": "facosta0787",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chalk": "^2.3.0",
+    "express": "^4.16.2"
+  }
+}
