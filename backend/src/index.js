@@ -3,8 +3,7 @@ import express from 'express'
 import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
 import { database } from 'db'
-import bcrypt from 'bcrypt'
-import _Auth from './controllers/AuthController'
+import Auth from './controllers/AuthController'
 const PORT = process.env.PORT || 3000
 
 async function main(){
@@ -12,29 +11,42 @@ async function main(){
   app.use(bodyParser.urlencoded({ extended:false }))
   app.use(bodyParser.json())
 
-  await database({ reset:false })
-  const Auth = new _Auth
+  try{
+    await database({ reset:false })
+  }catch(err){
+    console.log(err.message)
+    console.log(err.stack)
+  }
 
-  app.get('/', async (req, res ) => {
-
-    const userCreated = await Auth.addUser({
-      user:'jrojas',
-      name:'Manuel Rojas',
-      password:'minuevohijo'
-    })
-
-    res.send(userCreated)
-
+  app.get('/', async (req, res) =>{
+    console.log(req.body)
+    res.send({message: 'Welcome to simple node-login example'})
   })
 
-  app.get('/user/compare', async (req, res) =>{
-    const result = await bcrypt.compare('porque','$2a$10$nsMb/rNFCK6i.Z1kfycUiO3G9WP7TRu5jaYl2TaPMxO/BDd4nUhnq')
-    res.send({result})
+  app.post('/signin', async (req,res) =>{
+    const params = {
+      user: req.body.user,
+      password: req.body.password
+    }
+    const resp = await Auth.signIn(params)
+    res.send({ resp })
+  })
+
+  app.post('/signup', async (req,res) =>{
+    const {user, name, password} = req.body
+    const params ={
+      user,
+      name,
+      password
+    }
+    const resp = await Auth.signUp(params)
+    res.send(resp)
   })
 
   app.listen(PORT, () => {
     console.log(chalk.green(`Server running and listening on http://localhost:${PORT}`))
   })
 }
+
 
 main()
