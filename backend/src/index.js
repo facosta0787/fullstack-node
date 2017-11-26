@@ -4,6 +4,7 @@ import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
 import { database } from 'db'
 import Auth from './controllers/AuthController'
+import jwt from 'jsonwebtoken'
 const PORT = process.env.PORT || 3000
 
 async function main(){
@@ -24,23 +25,21 @@ async function main(){
   })
 
   app.post('/signin', async (req,res) =>{
-    const params = {
-      user: req.body.user,
-      password: req.body.password
-    }
-    const resp = await Auth.signIn(params)
-    res.send({ resp })
+    res.status(200).send( await Auth.signIn( req ) )
   })
 
   app.post('/signup', async (req,res) =>{
-    const {user, name, password} = req.body
-    const params ={
-      user,
-      name,
-      password
+    res.send(await Auth.signUp(req))
+  })
+
+  app.post('/auth', (req, res) => {
+    const user = {
+      user:'facosta',
+      name:'Felipe Acosta',
+      role:'user'
     }
-    const resp = await Auth.signUp(params)
-    res.send(resp)
+    const token = jwt.sign(user,'misecretapp')
+    res.send({token})
   })
 
   app.listen(PORT, () => {

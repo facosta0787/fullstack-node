@@ -14,7 +14,8 @@ class AuthController{
     this.User = _User()
   }
 
-  async signIn({user,password}){
+  async signIn(req){
+    const { user , password } = req.body
     const result = await this.User.findAll({
       where:{
         user:user
@@ -23,15 +24,16 @@ class AuthController{
     if(result){
       try{
         const validate = await bcrypt.compare(password,result[0].password)
-        return validate
+        return { data: validate }
       }catch(e){
         return e
       }
     }
-    return false
+    return { data:false }
   }
 
-  async signUp({ user, name , password }){
+  async signUp(req){
+    const { user, name , password } = req.body
     const exists = await this.User.findAll({
       where:{
         user: user
