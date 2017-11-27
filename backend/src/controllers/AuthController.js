@@ -1,12 +1,14 @@
 import { User as _User } from 'db'
 import bcrypt from 'bcrypt'
 import chalk from 'chalk'
+import jwt from 'jsonwebtoken'
 
 function log(string){
   if(string){
     return console.log(chalk.yellow(string))
   }
 }
+
 const ROUNDS = 10
 
 class AuthController{
@@ -16,32 +18,59 @@ class AuthController{
 
   async signIn(req){
     const { user , password } = req.body
-    const result = await this.User.findAll({
+    const result = await this.User.findOne({
       where:{
         user:user
       }
     })
-    if(result){
-      try{
-        const validate = await bcrypt.compare(password,result[0].password)
-        return { data: validate }
-      }catch(e){
-        return e
+
+    if(!result){
+      return {
+        message: `User doesn't exist`,
+        data: {}
       }
     }
-    return { data:false }
+
+    try{
+      const validate = await bcrypt.compare(password,result.password)
+
+      if(!validate){
+        return {
+          message: 'Password is wrong !',
+          data: {}
+        }
+      }
+
+      const payload = {
+        iss: req.headers.host,
+        sub: result.id,
+        user : result.user,
+        name : result.name,
+
+      }
+      const token = await jwt.sign(payload,'secretpassword',{expiresIn:'14d'})
+      return {
+        message: 'Authentication successfully !',
+        data: token
+      }
+    }catch(e){
+      return { e }
+    }
   }
 
   async signUp(req){
     const { user, name , password } = req.body
-    const exists = await this.User.findAll({
+    const exists = await this.User.findOne({
       where:{
         user: user
       }
     })
 
-    if( exists.length === 1 ){
-      return { error: 'User already exists!' }
+    if( exists ){
+      return {
+        message:'User already exists !',
+        data:[ exists ]
+      }
     }
 
     const new_password = await bcrypt.hash(password,ROUNDS)
@@ -51,23 +80,10 @@ class AuthController{
         password: new_password
       })
 
-    return new_user
-
-  }
-
-  async getUsers(){
-    const users = await this.User.findAll()
-    return users
-  }
-
-  async addUser(user){
-    const hash = await bcrypt.hash(user.password,10)
-    const result = await this.User.create({
-      user: user.user,
-      name: user.name,
-      password: hash
-    })
-    return result
+    return {
+      message:'User has been created successfully !',
+      data: [ new_user ]
+    }
   }
 }
 
