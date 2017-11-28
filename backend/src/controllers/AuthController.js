@@ -27,6 +27,7 @@ class AuthController{
     if(!result){
       return {
         message: `User doesn't exist`,
+        status: 400,
         data: {}
       }
     }
@@ -37,6 +38,7 @@ class AuthController{
       if(!validate){
         return {
           message: 'Password is wrong !',
+          status: 401,
           data: {}
         }
       }
@@ -51,6 +53,7 @@ class AuthController{
       const token = await jwt.sign(payload,'secretpassword',{expiresIn:'14d'})
       return {
         message: 'Authentication successfully !',
+        status: 200,
         data: token
       }
     }catch(e){
@@ -69,7 +72,8 @@ class AuthController{
     if( exists ){
       return {
         message:'User already exists !',
-        data:[ exists ]
+        status: 400,
+        data: exists
       }
     }
 
@@ -82,7 +86,8 @@ class AuthController{
 
     return {
       message:'User has been created successfully !',
-      data: [ new_user ]
+      status: 200,
+      data: new_user
     }
   }
 }

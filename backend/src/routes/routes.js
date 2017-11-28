@@ -10,17 +10,13 @@ router.get('/', async (req, res) =>{
 })
 
 router.post('/signin', async (req,res) =>{
-  res.status(200).send( await Auth.signIn( req ) )
+  const r = await Auth.signIn( req )
+  res.status(r.status).send( r )
 })
 
 router.post('/signup', async (req,res) =>{
-  res.send(await Auth.signUp(req))
-})
-
-router.post('/auth', (req, res) => {
-  const user = req.body
-  const token = jwt.sign(user,'misecretrouter')
-  res.send({token})
+  const r = await Auth.signUp(req)
+  res.status(r.status).send(r)
 })
 
 module.exports = router
