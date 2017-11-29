@@ -11,9 +11,6 @@ exports.database = async function(config){
   const User = UserModel()
   const Post = PostModel()
 
-  User.hasMany(Post)
-  Post.belongsTo(User)
-
   await db.authenticate()
     .then(err => console.log(chalk.green('Connection has been successfully !')),
           err => {
@@ -23,6 +20,8 @@ exports.database = async function(config){
     )
 
   if(config.reset){
+    User.hasMany(Post)
+    Post.belongsTo(User)
     await db.sync({ force:true }).then( ()=> console.log(chalk.green('Synced successfully!')))
   }
 
@@ -31,4 +30,9 @@ exports.database = async function(config){
 exports.User = function(){
   const User = UserModel()
   return User
+}
+
+exports.Post = function(){
+  const Post = PostModel()
+  return Post
 }

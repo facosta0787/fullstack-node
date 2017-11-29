@@ -14,7 +14,7 @@ async function main(){
   app.use(bodyParser.json())
 
   try{
-    await database({ reset:config.resetdb })
+    await database({ reset:config.setup })
   }catch(err){
     console.log(err.message)
     console.log(err.stack)

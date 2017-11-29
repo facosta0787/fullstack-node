@@ -19,6 +19,11 @@ module.exports = function UserModel(){
     password:{
       type: Sequelize.STRING,
       allowNUll: false
+    },
+    admin:{
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   })
 

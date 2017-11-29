@@ -55,7 +55,8 @@ class AuthController{
   }
 
   async signUp(req){
-    const { user, name , password } = req.body
+    const { user, name, password, admin } = req.body
+    const _admin = admin === 'true'
     const exists = await this.User.findOne({
       where:{
         user: user
@@ -70,17 +71,18 @@ class AuthController{
       }
     }
 
-    const new_password = await bcrypt.hash(password,config.saltRounds)
-    const new_user = await this.User.create({
+    const _password = await bcrypt.hash(password,config.saltRounds)
+    const _user = await this.User.create({
         user: user,
         name: name,
-        password: new_password
+        password: _password,
+        admin: _admin
       })
 
     return {
       message:'User has been created successfully !',
       status: 200,
-      data: new_user
+      data: _user
     }
   }
 }

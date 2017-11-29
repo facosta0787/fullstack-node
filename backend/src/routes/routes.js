@@ -22,9 +22,17 @@ router.post('/signup', async (req,res) =>{
   res.status(r.status).send(r)
 })
 
+// Routes for model Posts
+router.get('/post',async (req,res) =>{
+  await Post.getPost(req,res)
+})
 
-router.get('/post',jwtmd({ secret: config.tokensecret }) ,async (req, res) =>{
-  await Post.createPost()
+router.get('/post/:id',async (req,res) =>{
+  await Post.getPost(req,res)
+})
+
+router.post('/post',jwtmd({ secret: config.tokensecret }) ,async (req, res) =>{
+      await Post.createPost(req,res)
 })
 
 module.exports = router
