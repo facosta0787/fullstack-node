@@ -1,15 +1,8 @@
 import { User as _User } from 'db'
+import config from '../config'
 import bcrypt from 'bcrypt'
 import chalk from 'chalk'
 import jwt from 'jsonwebtoken'
-
-function log(string){
-  if(string){
-    return console.log(chalk.yellow(string))
-  }
-}
-
-const ROUNDS = 10
 
 class AuthController{
   constructor() {
@@ -50,7 +43,7 @@ class AuthController{
         name : result.name,
 
       }
-      const token = await jwt.sign(payload,'secretpassword',{expiresIn:'14d'})
+      const token = await jwt.sign(payload,config.tokensecret,{expiresIn:'14d'})
       return {
         message: 'Authentication successfully !',
         status: 200,
@@ -77,7 +70,7 @@ class AuthController{
       }
     }
 
-    const new_password = await bcrypt.hash(password,ROUNDS)
+    const new_password = await bcrypt.hash(password,config.saltRounds)
     const new_user = await this.User.create({
         user: user,
         name: name,

@@ -1,10 +1,11 @@
 import chalk from 'chalk'
+import config from './config'
 import express from 'express'
 import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
 import { database } from 'db'
 import router from './routes/routes'
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || config.port
 
 async function main(){
   const app = asyncify(express())
@@ -13,7 +14,7 @@ async function main(){
   app.use(bodyParser.json())
 
   try{
-    await database({ reset:false })
+    await database({ reset:config.resetdb })
   }catch(err){
     console.log(err.message)
     console.log(err.stack)
