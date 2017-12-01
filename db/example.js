@@ -1,38 +1,61 @@
-'use strict'
-const chalk = require('chalk')
-const db = require('./index')
-const sha256 = require('crypto-js/sha256')
-const base64 = require('crypto-js/enc-base64')
+const db = require('./index')({ reset: false })
 
-async function run(){
-
-  const { User, Post } = await db({ reset:true })
-
-  // const user = await User.create({
-  //   user:'facosta',
-  //   name:'Felipe Acosta',
-  //   password: base64.stringify(sha256('porque'))
-  // }).catch(handleFatalError)
-
-  const users = await User.findAll()
-  console.log(users)
-
-  // console.log(chalk.green('---Created User---'))
-  // console.log(user)
-
-  // const post = await Post.create({
-  //   title:'PreactJS',
-  //   desc:'A alternative to ReactJS',
-  //   userId: 1
-  // }).catch(handleFatalError)
-  //
-  // console.log(chalk.green('---Created Post---'))
-  // console.log(post)
+async function create(){
+  const user = await db.User.create({
+    user:'facosta',
+    name:'Felipe Acosta',
+    password:'porque',
+    admin: true
+  })
+  const user2 = await db.User.create({
+    user:'jescobar',
+    name:'Jose Escobar',
+    password:'porque',
+    admin: false
+  })
+  console.log([user.dataValues,user2.dataValues])
 }
 
-run()
+async function createPost(){
+  const post = await db.Post.create({
+    title: 'ReactJS',
+    desc: `A JavaScript's library to create web interfaces`,
+    userId: 1
+  })
+  const post2 = await db.Post.create({
+    title: 'VueJS',
+    desc: `A JavaScript's library to create web interfaces`,
+    userId: 2
+  })
+  console.log([post.dataValues,post2.dataValues])
+}
 
-function handleFatalError(err){
-    console.log(chalk.red(`Error: ${err.message}`))
-    console.log(chalk.red(`Error: ${err.stack}`))
+async function getUsers(){
+  const users = await db.User.findAll()
+  console.log('--- Users ---')
+  console.log(objectJson(users))
+}
+
+async function getPosts(){
+  const posts = await db.Post.findAll()
+  console.log('--- Posts ---')
+  console.log(objectJson(posts))
+}
+
+async function getPostsUsers(){
+  const posts = await db.Post.findAll({
+    include: [ db.User ]
+  })
+  console.log()
+  console.log(objectJson(posts))
+}
+
+// create()
+// createPost()
+setTimeout( () => getUsers(), 1 * 1000)
+setTimeout( () => getPosts(), 2 * 1000)
+setTimeout( () => getPostsUsers(), 3 * 1000)
+
+function objectJson(complex){
+  if(complex) return JSON.parse(JSON.stringify(complex))
 }

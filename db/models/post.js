@@ -6,7 +6,7 @@ const dbInstance = require('../lib/dbcon')
 module.exports = function PostModel(){
   const db = dbInstance()
 
-  return db.define('post',{
+  const Post = db.define('post',{
     title:{
       type: Sequelize.STRING,
       allowNull: false
@@ -14,10 +14,17 @@ module.exports = function PostModel(){
     desc:{
       type: Sequelize.STRING,
       allowNull: false
-    },
-    userId:{
-      type: Sequelize.INTEGER,
-      allowNull: false
     }
   })
+
+  Post.associate = function(models){
+    models.Post.belongsTo(models.User,{
+      onDelete: 'CASCADE',
+      foreignKey: {
+        allowNUll: false
+      }
+    })
+  }
+
+  return Post
 }

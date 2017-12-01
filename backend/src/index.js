@@ -3,28 +3,35 @@ import config from './config'
 import express from 'express'
 import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
-import { database } from 'db'
-import router from './routes/routes'
+import database from 'db'
+import router from './routes'
 const PORT = process.env.PORT || config.port
 
-async function main(){
+function main(){
+
   const app = asyncify(express())
   app.use('/public', express.static(__dirname + '/static'))
   app.use(bodyParser.urlencoded({ extended:false }))
   app.use(bodyParser.json())
 
-  try{
-    await database({ reset:config.setup })
-  }catch(err){
-    console.log(err.message)
-    console.log(err.stack)
-  }
+  database({ reset:config.setup })
 
-  app.use('/api',router)
+  app.use('/api',router.auth)
+  app.use('/api/post',router.post)
+
+  app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send({
+      message:'The token is invalid or is absent...',
+      status: 401
+    });
+  }
+});
 
   app.listen(PORT, () => {
     console.log(chalk.green(`Server running and listening on http://localhost:${PORT}`))
   })
+
 }
 
 main()

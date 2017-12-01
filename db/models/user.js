@@ -1,4 +1,4 @@
-'use strict'
+'use strict' 
 
 const Sequelize = require('sequelize')
 const dbInstance = require('../lib/dbcon')
@@ -6,7 +6,7 @@ const dbInstance = require('../lib/dbcon')
 module.exports = function UserModel(){
   const db = dbInstance()
 
-  return db.define('user',{
+  const User = db.define('user',{
     user:{
       type: Sequelize.STRING,
       allowNull: false,
@@ -27,4 +27,9 @@ module.exports = function UserModel(){
     }
   })
 
+  User.associate = function(models){
+    models.User.hasMany(models.Post)
+  }
+
+  return User
 }

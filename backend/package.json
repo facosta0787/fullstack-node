@@ -8,14 +8,11 @@
     "dev": "set PORT=3000 && nodemon bin/dev",
     "build": "npm run clean && mkdir dist && babel src -s -d dist",
     "prod": "npm run build && node bin/prod",
+    "start": "npm run prod",
     "tools": "npm install babel-cli babel-register --global"
   },
   "author": "facosta0787",
   "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
-  },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
@@ -28,5 +25,9 @@
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.1.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
