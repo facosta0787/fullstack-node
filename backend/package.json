@@ -4,12 +4,11 @@
   "description": "A simple backend for login example",
   "main": "index.js",
   "scripts": {
-    "clean": "remove dist",
-    "dev": "set PORT=3000 && nodemon bin/dev",
-    "build": "npm run clean && mkdir dist && babel src -s -d dist",
+    "clean": "rm -r dist && mkdir dist",
+    "dev": "PORT=3000 nodemon bin/dev",
+    "build": "babel src -s -d dist",
     "prod": "npm run build && node bin/prod",
-    "start": "npm run prod",
-    "tools": "npm install babel-cli babel-register --global"
+    "start": "npm run prod"
   },
   "author": "facosta0787",
   "license": "MIT",
@@ -27,6 +26,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1"
   }
