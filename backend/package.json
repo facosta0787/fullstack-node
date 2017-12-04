@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -r dist && mkdir dist",
     "dev": "PORT=3000 nodemon bin/dev",
-    "build": "babel src -s -d dist",
+    "build": "babel src -s -d dist && cp -r src/static dist/",
     "prod": "npm run build && node bin/prod",
     "start": "npm run prod"
   },
