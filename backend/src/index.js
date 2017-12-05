@@ -3,7 +3,7 @@ import config from './config'
 import express from 'express'
 import asyncify from 'express-asyncify'
 import bodyParser from 'body-parser'
-import database from 'db'
+import database from './db'
 import router from './routes'
 const PORT = process.env.PORT || config.port
 

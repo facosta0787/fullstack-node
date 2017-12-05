@@ -12,6 +12,7 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "sequelize": "^4.22.9",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^3.1.13",
+    /*"db": "file:../db"*/
   }
 }

@@ -5,7 +5,7 @@
 403 - Forbidden Sin provilegios
 404 - Not found,
 */
-import db from 'db'
+import db from '../db'
 const { User , Post } = db()
 
 class PostController{

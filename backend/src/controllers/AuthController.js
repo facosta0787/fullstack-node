@@ -1,4 +1,4 @@
-import db from 'db'
+import db from '../db'
 import config from '../config'
 import bcrypt from 'bcrypt'
 import chalk from 'chalk'

@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -r dist && mkdir dist",
+    "build": "babel src -s -d dist && cp -r src/static dist/ && cp src/db/lib/db.blog.sqlite dist/db/lib/db.blog.sqlite",
     "dev": "PORT=3000 nodemon bin/dev",
-    "build": "babel src -s -d dist && cp -r src/static dist/",
-    "prod": "npm run build && node bin/prod",
-    "start": "npm run prod"
+    "prod": "npm run clean && npm run build && PORT=80 node bin/prod",
+    "start":"node bin/prod",
+    "deploy": "now --public --force"
   },
   "author": "facosta0787",
   "license": "MIT",
@@ -18,12 +19,13 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
-    "db": "file:../db",
     "express": "^4.16.2",
     "express-asyncify": "^1.0.0",
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.1.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sequelize": "^4.22.9",
+    "sqlite3": "^3.1.13"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

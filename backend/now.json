@@ -1,0 +1,8 @@
+{
+  "name":"facosta-login",
+  "alias": "facosta-login.now.sh",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "type": "npm"
+}
