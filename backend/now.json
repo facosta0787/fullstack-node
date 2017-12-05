@@ -2,7 +2,7 @@
   "name":"facosta-login",
   "alias": "facosta-login.now.sh",
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "prod"
   },
-  "type": "npm"
+  "type": "node"
 }
