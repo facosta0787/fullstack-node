@@ -56,7 +56,8 @@ class AuthController{
   }
 
   async signUp(req,res){
-    if(!res.body){
+
+    if(!req.body){
       return res.status(400).send({
         message:'Bad request',
         status: 400,
