@@ -10,7 +10,8 @@ const PORT = process.env.PORT || config.port
 function main(){
 
   const app = asyncify(express())
-  app.use('/public', express.static(__dirname + '/static'))
+  // app.use('/public', express.static(__dirname + '/static'))
+  app.use('/', express.static(__dirname + '/static'))
   app.use(bodyParser.urlencoded({ extended:false }))
   app.use(bodyParser.json())
 

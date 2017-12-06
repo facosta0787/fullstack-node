@@ -11,7 +11,7 @@ module.exports = function PostModel(){
       type: Sequelize.STRING,
       allowNull: false
     },
-    desc:{
+    text:{
       type: Sequelize.STRING,
       allowNull: false
     }

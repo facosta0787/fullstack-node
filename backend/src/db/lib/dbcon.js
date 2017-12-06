@@ -12,7 +12,7 @@ module.exports = function dbInstance() {
        query: {
          raw: false
        },
-       logging: false
+       logging: true
      })
   }
   return dbinstance

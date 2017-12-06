@@ -5,8 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>My API</title>
+  <link rel="stylesheet" href="./css/semantic.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-  <h1>Welcome to an simple example Node Express</h1>
+  <div class="ui container">
+    <h1 class="ui header">APIRest User administration</h1>
+    <h2 class="ui header">API Reference</h2>
+    <h3 class="ui header">Unprotected Routes</h3>
+    <p>
+      POST /api/signup -> Use to create user. to create user as admin you should be an Admin User
+    </p>
+    <xmp class="code">
+      {
+        user: "test",
+        name: "test name",
+        password: "testpassword",
+        admin: true or false
+      }
+    </xmp>
+    <p>
+      POST /api/signin -> Use to login into the system ang get your JSon-Web-Toker
+    </p>
+    <xmp class="code">
+      {
+        user: "test",
+        password: "testpassword"
+      }
+    </xmp>
+
+    <h3 class="ui header">Protected Routes</h3>
+
+    <p>
+      GET /api/post -> Use to fetch all posts. You have pass Authorization Header with the JWToken
+    </p>
+    <xmp class="code">
+      Authorization Bearer yourJsonWebToken
+    </xmp>
+
+    <p>
+      GET /api/post/{ id } -> Use to fetch on post. You have pass Authorization Header with the JWToken
+    </p>
+    <xmp class="code">
+      Authorization Bearer yourJsonWebToken
+    </xmp>
+
+    <p>
+      POST /api/post -> Use to create one post. You have pass Authorization Header with the JWToken
+    </p>
+    <xmp class="code">
+      Authorization Bearer yourJsonWebToken
+      {
+        title: "lorem ipsum title",
+        desc: "lorem ipsun text or description"
+      }
+    </xmp>
+
+    <p>
+      DELETE /api/post -> Use to delete one post. You have pass Authorization Header with the JWToken
+    </p>
+    <xmp class="code">
+      Authorization Bearer yourJsonWebToken
+      {
+        id: 1
+      }
+    </xmp>
+  </div>
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="./js/semantic.min.js"></script>
 </body>
 </html>

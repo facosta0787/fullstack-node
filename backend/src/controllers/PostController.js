@@ -17,9 +17,9 @@ class PostController{
   async createPost(req,res){
     const userId = req.user.sub
     //const userId = req.body.userId
-    const { title, desc } = req.body
+    const { title, text } = req.body
 
-    if(!title || !desc){
+    if(!title || !text){
       return res.status(400).send({
         message: 'Error, incomplete params!',
         status: 400
@@ -29,7 +29,7 @@ class PostController{
     try{
       const post = await this.Post.create({
         title,
-        desc,
+        text,
         userId
       })
       return res.status(200).send({

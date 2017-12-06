@@ -56,7 +56,14 @@ class AuthController{
   }
 
   async signUp(req,res){
-    console.log(models)
+    if(!res.body){
+      return res.status(400).send({
+        message:'Bad request',
+        status: 400,
+        data: false
+      })
+    }
+
     const { user, name, password, admin } = req.body
     const _admin = admin === 'true'
     const exists = await this.User.findOne({
