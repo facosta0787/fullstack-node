@@ -19,15 +19,16 @@ function main(){
 
   app.use('/api',router.auth)
   app.use('/api/post',router.post)
+  app.use('/api/user',router.user)
 
   app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401).send({
-      message:'The token is invalid or is absent...',
-      status: 401
-    });
-  }
-});
+    if (err.name === 'UnauthorizedError') {
+      res.status(401).send({
+        message:'The token is invalid or is absent...',
+        status: 401
+      })
+    }
+  })
 
   app.listen(PORT, () => {
     console.log(chalk.green(`Server running and listening on http://localhost:${PORT}`))
