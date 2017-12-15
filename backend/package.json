@@ -8,7 +8,7 @@
     "build": "babel src -s -d dist && cp -r src/static dist/ && cp src/db/lib/db.blog.sqlite dist/db/lib/db.blog.sqlite",
     "dev": "PORT=3000 nodemon bin/dev",
     "prod": "npm run clean && npm run build && PORT=80 node bin/prod",
-    "start":"node bin/prod",
+    "start": "node bin/prod",
     "deploy": "now --public --force"
   },
   "author": "facosta0787",
