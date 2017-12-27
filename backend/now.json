@@ -4,5 +4,5 @@
   "env": {
     "NODE_ENV": "prod"
   },
-  "type": "npm"
+  "type": "npm" 
 }
