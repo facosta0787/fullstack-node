@@ -1,11 +1,9 @@
 'use strict'
 
 const Sequelize = require('sequelize')
-const dbInstance = require('../lib/dbcon')
+const db = require('../lib/dbcon')()
 
 module.exports = function PostModel(){
-  const db = dbInstance()
-
   const Post = db.define('post',{
     title:{
       type: Sequelize.STRING,

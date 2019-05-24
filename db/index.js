@@ -1,12 +1,11 @@
 'use strict'
 const chalk       = require('chalk')
 const Sequelize   = require('sequelize')
-const dbInstance  = require('./lib/dbcon')
+const db          = require('./lib/dbcon')()
 const UserModel   = require('./models/user')
 const PostModel   = require('./models/post')
 
 module.exports = function(config = { reset: false }){
-  const db = dbInstance()
   const User = UserModel()
   const Post = PostModel()
   const models = {

@@ -1,11 +1,9 @@
-'use strict' 
+'use strict'
 
 const Sequelize = require('sequelize')
-const dbInstance = require('../lib/dbcon')
+const db = require('../lib/dbcon')()
 
 module.exports = function UserModel(){
-  const db = dbInstance()
-
   const User = db.define('user',{
     user:{
       type: Sequelize.STRING,
