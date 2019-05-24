@@ -50,8 +50,8 @@ async function getPostsUsers(){
   console.log(objectJson(posts))
 }
 
-// create()
-// createPost()
+create()
+createPost()
 setTimeout( () => getUsers(), 1 * 1000)
 setTimeout( () => getPosts(), 2 * 1000)
 setTimeout( () => getPostsUsers(), 3 * 1000)
